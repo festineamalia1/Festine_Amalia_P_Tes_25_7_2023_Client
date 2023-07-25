@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-
+import moment from "moment";
 import NavBar from "components/NavBar";
 
 import {
@@ -26,12 +26,7 @@ export default function Home() {
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
   const history = useHistory();
-  // const {
-  //   isLoading,
-  //   error,
-  //   data: videos,
-  //   refetch,
-  // } = useQuery("getdata", () => API.get(`mahasiswa`));
+
   const handleShow = () => setShow(true);
   const [jadwal, setJadwal] = useState([]);
   const [editData, setEditData] = useState([]);
@@ -97,15 +92,27 @@ export default function Home() {
             <div>
               <div className="d-flex row mt-5 justify-content-between">
                 <div className="col">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="keterangan"
-                    placeholder="keterangan"
-                  ></input>
+                  <div className="row">
+                    <div>- Group Piket -</div>
+                  </div>
+                  <div className="row">
+                    <div className="col col">Piket Hadir</div>
+                    <div className="col col-auto"> : </div>
+                    <div className="col"> A </div>
+                  </div>
+                  <div className="row">
+                    <div className="col col">Cadangan Piket</div>
+                    <div className="col col-auto"> : </div>
+                    <div className="col"> B </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">Lepas Piket</div>
+                    <div className="col col-auto"> : </div>
+                    <div className="col"> C </div>
+                  </div>
                 </div>
                 <div className="d-flex col justify-content-end">
-                  25 Juli 2023
+                  {moment().format("D MMMM YYYY")}
                 </div>
               </div>
               <div className="row mt-5">
