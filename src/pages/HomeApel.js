@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from "react";
 
 import NavBar from "components/NavBar";
 
-
 import {
   Container,
   Row,
@@ -36,6 +35,7 @@ export default function Home() {
   const handleShow = () => setShow(true);
   const [jadwal, setJadwal] = useState([]);
   const [editData, setEditData] = useState([]);
+  const [hadirData, setHadirData] = useState([]);
 
   const [idTabel, setIdTabel] = useState(4);
 
@@ -55,6 +55,13 @@ export default function Home() {
     });
   };
 
+  const fetchDataHadir = () => {
+    axios.get(`${baseURL}/grouppikethadir`).then((response) => {
+      setHadirData(response.data);
+    });
+  };
+
+  console.log("hadirData", hadirData);
   const handleEditData = (id) => {
     axios
       .post(`${baseURL}/grouppiket/2222`, {
@@ -78,6 +85,7 @@ export default function Home() {
     // refetch();
     fetchJadwalData();
     fetchEditData();
+    fetchDataHadir();
   }, []);
 
   const handleSubmit = () => {
@@ -190,13 +198,13 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        {editData.data &&
-                          editData.data.map((dt, i) => (
+                        {hadirData.data &&
+                          hadirData.data.map((dt, i) => (
                             <tr>
-                              <td>Nama1</td>
-                              <td>Jabatan 1</td>
-                              <td>A</td>
-                              <td>-</td>
+                              <td>{dt.Nama}</td>
+                              <td>{dt.Nama_jabatan}</td>
+                              <td>{dt.Nama_group}</td>
+                              <td>{dt.Ket ? dt.Ket : "-"}</td>
                             </tr>
                           ))}
                       </tbody>
