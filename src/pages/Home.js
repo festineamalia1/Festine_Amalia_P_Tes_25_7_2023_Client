@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from "react";
 
 import NavBar from "components/NavBar";
 
-
 import {
   Container,
   Row,
@@ -37,7 +36,7 @@ export default function Home() {
   const [jadwal, setJadwal] = useState([]);
   const [editData, setEditData] = useState([]);
 
-  const baseURL = "http://localhost/SimpleApiPHP";
+  const baseURL = "http://localhost/Festine_Amalia_P_Tes_25_7_2023_Server";
 
   const fetchJadwalData = () => {
     axios.get(`${baseURL}/jadwal`).then((response) => {
@@ -124,17 +123,40 @@ export default function Home() {
                     {editData.data &&
                       editData.data.map((dt, i) => (
                         <tr>
-                          <td>{dt.id_group_piket}</td>
-                          <td>{dt.id_pekerja}</td>
+                          <td>{dt.nama}</td>
+                          <td>{dt.nama_jabatan}</td>
                           <td>
                             <select
                               class="form-select"
                               aria-label="Default select example"
                             >
-                              <option selected>Group Piket</option>
-                              <option value="1">Piket Hadir</option>
-                              <option value="2">Cadangan Piket</option>
-                              <option value="3">Lepas Piket</option>
+                              <option>Group Piket</option>
+                              <option
+                                selected={dt.Nama_group == "A" ? true : false}
+                                value="1"
+                              >
+                                Piket Hadir
+                              </option>
+                              <option
+                                selected={dt.Nama_group == "B" ? true : false}
+                                value="2"
+                              >
+                                Cadangan Piket
+                              </option>
+                              <option
+                                selected={dt.Nama_group == "C" ? true : false}
+                                value="3"
+                              >
+                                Lepas Piket
+                              </option>
+                              <option
+                                selected={
+                                  dt.Nama_group == "Izin" ? true : false
+                                }
+                                value="3"
+                              >
+                                Tidak Hadir
+                              </option>
                             </select>
                           </td>
                           <td>
@@ -142,7 +164,7 @@ export default function Home() {
                               type="text"
                               class="form-control"
                               id="keterangan"
-                              placeholder="keterangan"
+                              placeholder={dt.Ket}
                             ></input>
                           </td>
                           <td>

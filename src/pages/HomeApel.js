@@ -36,6 +36,10 @@ export default function Home() {
   const [jadwal, setJadwal] = useState([]);
   const [editData, setEditData] = useState([]);
   const [hadirData, setHadirData] = useState([]);
+  const [cadanganData, setCadanganData] = useState([]);
+  const [lepasData, setLepasData] = useState([]);
+  const [izinData, setIzinData] = useState([]);
+  const [idJadwal, setIdJadwal] = useState(0);
 
   const [idTabel, setIdTabel] = useState(4);
 
@@ -56,8 +60,47 @@ export default function Home() {
   };
 
   const fetchDataHadir = () => {
-    axios.get(`${baseURL}/grouppikethadir`).then((response) => {
-      setHadirData(response.data);
+    if (idJadwal == 0) {
+      axios.get(`${baseURL}/grouppikethadir`).then((response) => {
+        setHadirData(response.data);
+      });
+    } else {
+      axios.get(`${baseURL}/grouppikethadir/${idJadwal}`).then((response) => {
+        setHadirData(response.data);
+      });
+    }
+  };
+
+  const fetchDataCadangan = () => {
+    
+    if (idJadwal == 0) {
+    axios.get(`${baseURL}/groupcadangan`).then((response) => {
+      setCadanganData(response.data);
+    });
+    } else {
+    axios.get(`${baseURL}/groupcadangan/${idJadwal}`).then((response) => {
+      setCadanganData(response.data);
+    });
+    }
+  };
+
+  const fetchDataLepas = () => {
+   
+
+     if (idJadwal == 0) {
+       axios.get(`${baseURL}/grouplepas`).then((response) => {
+         setLepasData(response.data);
+       });
+     } else {
+       axios.get(`${baseURL}/grouplepas/${idJadwal}`).then((response) => {
+         setCadanganData(response.data);
+       });
+     }
+  };
+
+  const fetchDataIzin = () => {
+    axios.get(`${baseURL}/groupizin`).then((response) => {
+      setIzinData(response.data);
     });
   };
 
@@ -86,6 +129,9 @@ export default function Home() {
     fetchJadwalData();
     fetchEditData();
     fetchDataHadir();
+    fetchDataCadangan();
+    fetchDataLepas();
+    fetchDataIzin();
   }, []);
 
   const handleSubmit = () => {
@@ -94,6 +140,8 @@ export default function Home() {
   const handleClick = (e) => {
     setQuery(e.target.value);
   };
+
+  console.log("setIdJadwal", idJadwal);
   return (
     <>
       {/* isLoading ? (
@@ -111,12 +159,17 @@ export default function Home() {
               <div className="d-flex row mt-5 justify-content-between">
                 <div className="col col-auto">Pilih Tanggal :</div>
                 <div className="col">
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="keterangan"
-                    placeholder="keterangan"
-                  ></input>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    onChange={(e) => setIdJadwal(e.target.value)}
+                  >
+                    <option selected>Pilih Tanggal</option>
+                    {jadwal.data &&
+                      jadwal.data.map((dt, i) => (
+                        <option value={dt.id_jadwal}>{dt.jadwal}</option>
+                      ))}
+                  </select>
                 </div>
                 <div className="d-flex col justify-content-end">
                   25 Juli 2023
@@ -198,8 +251,8 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        {hadirData.data &&
-                          hadirData.data.map((dt, i) => (
+                        {lepasData.data &&
+                          lepasData.data.map((dt, i) => (
                             <tr>
                               <td>{dt.nama}</td>
                               <td>{dt.nama_jabatan}</td>
@@ -223,13 +276,13 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        {editData.data &&
-                          editData.data.map((dt, i) => (
+                        {cadanganData.data &&
+                          cadanganData.data.map((dt, i) => (
                             <tr>
-                              <td>Nama1</td>
-                              <td>Jabatan 1</td>
-                              <td>A</td>
-                              <td>-</td>
+                              <td>{dt.nama}</td>
+                              <td>{dt.nama_jabatan}</td>
+                              <td>{dt.Nama_group}</td>
+                              <td>{dt.Ket ? dt.Ket : "-"}</td>
                             </tr>
                           ))}
                       </tbody>
@@ -248,13 +301,13 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        {editData.data &&
-                          editData.data.map((dt, i) => (
+                        {cadanganData.data &&
+                          cadanganData.data.map((dt, i) => (
                             <tr>
-                              <td>Nama1</td>
-                              <td>Jabatan 1</td>
-                              <td>A</td>
-                              <td>-</td>
+                              <td>{dt.nama}</td>
+                              <td>{dt.nama_jabatan}</td>
+                              <td>{dt.Nama_group}</td>
+                              <td>{dt.Ket ? dt.Ket : "-"}</td>
                             </tr>
                           ))}
                       </tbody>
@@ -273,13 +326,13 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        {editData.data &&
-                          editData.data.map((dt, i) => (
+                        {izinData.data &&
+                          izinData.data.map((dt, i) => (
                             <tr>
-                              <td>Nama1</td>
-                              <td>Jabatan 1</td>
-                              <td>A</td>
-                              <td>-</td>
+                              <td>{dt.nama}</td>
+                              <td>{dt.nama_jabatan}</td>
+                              <td>{dt.Nama_group}</td>
+                              <td>{dt.Ket ? dt.Ket : "-"}</td>
                             </tr>
                           ))}
                       </tbody>
