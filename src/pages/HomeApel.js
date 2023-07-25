@@ -41,7 +41,7 @@ export default function Home() {
 
   console.log("idTabel", idTabel);
 
-  const baseURL = "http://localhost/SimpleApiPHP";
+  const baseURL = "http://localhost/Festine_Amalia_P_Tes_25_7_2023_Server";
 
   const fetchJadwalData = () => {
     axios.get(`${baseURL}/jadwal`).then((response) => {
@@ -201,8 +201,8 @@ export default function Home() {
                         {hadirData.data &&
                           hadirData.data.map((dt, i) => (
                             <tr>
-                              <td>{dt.Nama}</td>
-                              <td>{dt.Nama_jabatan}</td>
+                              <td>{dt.nama}</td>
+                              <td>{dt.nama_jabatan}</td>
                               <td>{dt.Nama_group}</td>
                               <td>{dt.Ket ? dt.Ket : "-"}</td>
                             </tr>
